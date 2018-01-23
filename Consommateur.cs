@@ -1,64 +1,44 @@
-﻿using System;
-using System.Collections.Concurrent;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace ProducteurConsommateur
 {
     public class Consommateur
     {
-        private Thread threadConsommateur;
-        private QueueToProduceAndSort cqueue;
-        private List<int> listToSort;
-        public bool IsFinish { get; private set; }
-        public Consommateur(QueueToProduceAndSort Cqueue)
+        private QueueToProduceAndSort queue;
+        private List<int> sortedList = new List<int>();
+        private Thread thread;
+
+        public Consommateur(QueueToProduceAndSort cqueue)
         {
-            cqueue = Cqueue;
-            listToSort = new List<int>();
-            IsFinish = false;
+            queue = cqueue;
         }
 
         public void Run()
         {
-            threadConsommateur = new Thread(() => Consume());
-            threadConsommateur.Start();
-        }
-
-        private void DisplaySortedList()
-        {
-            foreach(int nb in listToSort)
-            {
-                Console.WriteLine(nb);
-            }
-            Console.ReadLine();
+            thread = new Thread(() => Consume());
+            thread.Start();
         }
 
         private void Consume()
         {
-            lock (cqueue)
+            int integer;
+            while (queue.Dequeue(out integer))
             {
-                while ((cqueue.ConcurrentQueue.Count != 0 || !cqueue.IsFinish))
-                {
-                    if (cqueue.ConcurrentQueue.Count == 0 && !cqueue.IsFinish)
-                    {
-                        Monitor.Wait(cqueue);
-                    }
-                    int _output;
-                    if (cqueue.ConcurrentQueue.TryDequeue(out _output))
-                    {
-                        InsertSorted(_output);
-                    }
-                }
+                sortedList.Add(integer);
+                sortedList.Sort();
             }
-            IsFinish = true;
             DisplaySortedList();
         }
-
-        private void InsertSorted(int _output)
+        private void DisplaySortedList()
         {
-            listToSort.Add(_output);
-            listToSort.Sort();
+            foreach (int nb in sortedList)
+            {
+                Console.WriteLine(nb);
+            }
+            Console.ReadLine();
         }
     }
 }
