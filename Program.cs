@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,11 +13,11 @@ namespace ProducteurConsommateur
         static void Main(string[] args)
         {
             QueueToProduceAndSort cqueue = new QueueToProduceAndSort(NbElement);
-            Producteur producteur = new Producteur(cqueue, NbElement);
+            Producteur producteur = new Producteur(cqueue);
             Consommateur consommateur = new Consommateur(cqueue);
             producteur.Run();
             consommateur.Run();
-            while (!consommateur.IsFinish)
+            while (!(cqueue.IsFinished && cqueue.IsEmpty))
             {
                 Thread.Sleep(1000);
             }
