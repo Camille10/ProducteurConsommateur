@@ -8,11 +8,12 @@ namespace ProducteurConsommateur
     public class Consommateur
     {
         private QueueToProduceAndSort queue;
-        private SortedList<int,int> sortedList = new SortedList<int,int>();
+        private SortedListOutput sortedList;
         private Thread thread;
 
-        public Consommateur(QueueToProduceAndSort cqueue)
+        public Consommateur(QueueToProduceAndSort cqueue, SortedListOutput ListToSort)
         {
+            sortedList = ListToSort;
             queue = cqueue;
         }
 
@@ -27,17 +28,9 @@ namespace ProducteurConsommateur
             int integer;
             while (queue.Dequeue(out integer))
             {
-                sortedList.Add(integer,integer);
+                sortedList.Add(integer, integer);
             }
-            DisplaySortedList();
-        }
-        private void DisplaySortedList()
-        {
-            foreach (int number in sortedList.Values)
-            {
-                Console.WriteLine(number);
-            }
-            Console.ReadLine();
         }
     }
 }
+
