@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace ProducteurConsommateur.Tests
@@ -6,14 +6,14 @@ namespace ProducteurConsommateur.Tests
     [TestClass()]
     public class ConsommateurTests
     {
+        private SortedListOutput sortedList = new SortedListOutput();
+        QueueToProduceAndSort cqueue = new QueueToProduceAndSort(nbElement);
         Consommateur consommateur;
-        QueueToProduceAndSort cqueue;
         private static int nbElement = 1000;
 
         public ConsommateurTests()
         {
-            cqueue = new QueueToProduceAndSort(nbElement);
-            consommateur = new Consommateur(cqueue);
+            consommateur = new Consommateur(cqueue, sortedList);
         }
 
         public void FillQueue()
@@ -21,36 +21,10 @@ namespace ProducteurConsommateur.Tests
             Random _rnd = new Random();
             for (int _index = 0; _index < nbElement; _index++)
             {
-                cqueue.Enqueue(_rnd.Next(0, 255));
+                cqueue.Enqueue(_rnd.Next());
             }
             consommateur.Run();
-
-            while (!consommateur.IsFinish) { }
-        }
-
-
-        [TestMethod()]
-        public void ShuouldReturnASortedListWithNbElement()
-        {
-            FillQueue();
-            Assert.AreEqual(nbElement, consommateur.ListToSort.Count);
-        }
-
-
-
-        [TestMethod()]
-        public void ShouldTestSortedList()
-        {
-            FillQueue();
-            int _previousValue = int.MinValue;
-            foreach(int _currentValue in consommateur.ListToSort)
-            {
-                if (_currentValue < _previousValue)
-                {
-                    Assert.Fail();
-                }
-            }
-            Assert.IsTrue(true);
+            while (!(cqueue.IsFinished && cqueue.IsEmpty)) { }
         }
     }
 }
