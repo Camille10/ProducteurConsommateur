@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProducteurConsommateur;
 using System;
 using System.Collections.Generic;
@@ -11,33 +11,24 @@ namespace ProducteurConsommateur.Tests
     [TestClass()]
     public class QueueToProduceAndSortTests
     {
-        private static int nbElement = 1000;
-        QueueToProduceAndSort queueToProduceAndSort;
+        private static int maxElements = 1000;
+        QueueToProduceAndSort queueToProduceAndSort = new QueueToProduceAndSort(maxElements);
+        Random ramdomNumberGenerator = new Random();
 
-        public QueueToProduceAndSortTests()
+        [TestMethod()]
+        public void should_add_element_into_queue()
         {
-            queueToProduceAndSort = new QueueToProduceAndSort(nbElement);
+            Assert.IsTrue(queueToProduceAndSort.Enqueue(ramdomNumberGenerator.Next()));
         }
 
         [TestMethod()]
-        public void ShouldAddElementInQueue()
+        public void should_be_finished_when_queue_is_full()
         {
-            Random rnd = new Random();
-            int NbToInsert = rnd.Next();
-            queueToProduceAndSort.Enqueue(NbToInsert);
-            Assert.AreEqual(queueToProduceAndSort.ConcurrentQueue.Count, 1);
-        }
-
-        [TestMethod()]
-        public void ShouldInQueue()
-        {
-            Random rnd = new Random();
-            int NbToInsert = rnd.Next();
-            for (int index = 0; index < nbElement; index++)
+            for (int index = 0; index < maxElements; index++)
             {
-                queueToProduceAndSort.Enqueue(NbToInsert);
+                Assert.IsTrue(queueToProduceAndSort.Enqueue(ramdomNumberGenerator.Next()));
             }
-            Assert.AreEqual(queueToProduceAndSort.IsFinish, true);
+            Assert.IsTrue(queueToProduceAndSort.IsFinished);
         }
 
     }
