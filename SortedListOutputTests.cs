@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace ProducteurConsommateur.Tests
@@ -6,8 +6,7 @@ namespace ProducteurConsommateur.Tests
     [TestClass()]
     public class SortedListOutputTests
     {
-        public SortedListOutput sortedListClass = new SortedListOutput();
-
+        public OutputList sortedListClass = new OutputList();
 
         [TestMethod()]
         public void should_be_add_in_sortedList()
@@ -17,5 +16,6 @@ namespace ProducteurConsommateur.Tests
             sortedListClass.Add(number, number);
             Assert.AreEqual(sortedListClass.sortedList.Count, 1);
         }
+
     }
 }
