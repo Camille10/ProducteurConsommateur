@@ -10,8 +10,7 @@ namespace ProducteurConsommateur
     class Program
     {
         private static int NbElement = 1000;
-        private static int NbProducteur = 30;
-        private static int NbConsommateur = 30;
+        private static int NbProducteurConsommateur = 30;
 
 
         static void Main(string[] args)
@@ -19,7 +18,7 @@ namespace ProducteurConsommateur
                 QueueToProduceAndSort cqueue = new QueueToProduceAndSort(NbElement);
                 OutputList sortedListOutput = new OutputList();
 
-                for (int index = 0; index < NbProducteur; index++)
+                for (int index = 0; index < NbProducteurConsommateur; index++)
                 {
                     if (!(cqueue.IsFinished && cqueue.IsEmpty))
                     {
@@ -42,4 +41,3 @@ namespace ProducteurConsommateur
         }
     }
 }
-
