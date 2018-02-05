@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace ProducteurConsommateur.Tests
 {
     [TestClass()]
-    public class QueueToProduceAndSortTests
+    public class CommunicateQueueTests
     {
         private static int maxElements = 1000;
-        QueueToProduceAndSort queueToProduceAndSort = new QueueToProduceAndSort(maxElements);
+        CommunicateQueue queueToProduceAndSort = new CommunicateQueue(maxElements);
         Random ramdomNumberGenerator = new Random();
 
         [TestMethod()]
