@@ -17,7 +17,8 @@ namespace ProducteurConsommateur.Tests
             consommateur = new Consommateur(cqueue, sortedList);
         }
 
-        public void FillQueue()
+        [TestMethod]
+        public void Should_be_dequeue_the_queue()
         {
             Random _rnd = new Random();
             for (int _index = 0; _index < nbElement; _index++)
@@ -26,6 +27,7 @@ namespace ProducteurConsommateur.Tests
             }
             consommateur.Run();
             while (!(cqueue.IsFinished && cqueue.IsEmpty)) { }
+            Assert.AreEqual(cqueue.IsFinished, true);
         }
     }
 }
