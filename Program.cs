@@ -9,13 +9,13 @@ namespace ProducteurConsommateur
 {
     class Program
     {
-        private static int NbElement = 1000;
-        private static int NbProducteurConsommateur = 30;
+        private static int NbElement = 10;
+        private static int NbProducteurConsommateur = 1;
 
 
         static void Main(string[] args)
         {
-                QueueToProduceAndSort cqueue = new QueueToProduceAndSort(NbElement);
+                CommunicateQueue cqueue = new CommunicateQueue(NbElement);
                 OutputList sortedListOutput = new OutputList();
 
                 for (int index = 0; index < NbProducteurConsommateur; index++)
@@ -37,7 +37,16 @@ namespace ProducteurConsommateur
                 {
                     Thread.Sleep(1000);
                 }
-                sortedListOutput.DisplaySortedList();
+                DisplayOutputList(sortedListOutput);
+        }
+
+        public static void  DisplayOutputList(OutputList sortedListOutput)
+        {
+            foreach(var outputNumber in sortedListOutput.outputList.Values)
+            {
+                Console.WriteLine(outputNumber);
+            }
+            Console.ReadLine();
         }
     }
 }
