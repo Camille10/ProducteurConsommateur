@@ -8,14 +8,14 @@ namespace ProducteurConsommateur
 {
     public class OutputList
     {
-        public SortedList<int, int> sortedList = new SortedList<int, int>();
+        public SortedList<int, int> outputList = new SortedList<int, int>();
 
         public void Add(int key,int value)
         {
             Monitor.Enter(this);
             try
             {
-                sortedList.Add(key, value);
+                outputList.Add(key, value);
             }
             catch (ArgumentException)
             {
@@ -29,7 +29,7 @@ namespace ProducteurConsommateur
 
         public void DisplaySortedList()
         {
-            foreach (int number in sortedList.Values)
+            foreach (int number in outputList.Values)
             {
                 Console.WriteLine(number);
             }
