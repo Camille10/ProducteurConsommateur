@@ -14,14 +14,14 @@ namespace ProducteurConsommateur.Tests
             cqueue = new QueueToProduceAndSort(nbElement);
             producteur = new Producteur(cqueue);
         }
-    }
     
-    [TestMethod]
-    public void Should_be_fill_the_queue()
-    {
+        [TestMethod]
+        public void Should_be_fill_the_queue()
+        {
         producteur.Run();
         while (!cqueue.IsFinished){}
         Assert.AreEqual(true, cqueue.IsFinished);
+        }
     }
     
 }
