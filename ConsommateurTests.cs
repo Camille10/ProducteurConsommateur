@@ -6,7 +6,8 @@ namespace ProducteurConsommateur.Tests
     [TestClass()]
     public class ConsommateurTests
     {
-        private SortedListOutput sortedList = new SortedListOutput();
+        private OutputList sortedList = new OutputList();
+        private LinkedList<int> c = new LinkedList<int>();
         QueueToProduceAndSort cqueue = new QueueToProduceAndSort(nbElement);
         Consommateur consommateur;
         private static int nbElement = 1000;
