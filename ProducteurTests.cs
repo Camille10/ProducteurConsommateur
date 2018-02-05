@@ -12,15 +12,7 @@ namespace ProducteurConsommateur.Tests
         public ProducteurTests()
         {
             cqueue = new QueueToProduceAndSort(nbElement);
-            producteur = new Producteur(cqueue, nbElement);
-        }
-
-        [TestMethod()]
-        public void ShouldAddElementInCQueue()
-        {
-            producteur.Run();
-            while (!producteur.IsFinish) { }
-            Assert.AreEqual(nbElement, cqueue.ConcurrentQueue.Count);
+            producteur = new Producteur(cqueue);
         }
     }
 }
