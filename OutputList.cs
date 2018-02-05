@@ -19,21 +19,12 @@ namespace ProducteurConsommateur
             }
             catch (ArgumentException)
             {
-                Console.WriteLine("Duplicate Keys appears. Element not inserted");
+                throw;
             }
             finally
             {
                 Monitor.Exit(this);
             }
-        }
-
-        public void DisplaySortedList()
-        {
-            foreach (int number in outputList.Values)
-            {
-                Console.WriteLine(number);
-            }
-            Console.ReadLine();
         }
     }
 }
