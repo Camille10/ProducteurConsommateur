@@ -3,17 +3,25 @@ using System.Threading;
 
 namespace ProducteurConsommateur
 {
-    public class QueueToProduceAndSort
+    public class CommunicateQueue
     {
-        private Queue<int> queue = new Queue<int>();
+        private static Queue<int> queue = new Queue<int>();
         public bool IsFinished { get; private set; } = false;
         public bool IsEmpty { get; private set; } = true;
-        private int nbElementToInsert;
-        private int NbElementInserted;
+        private static int nbElementToInsert;
+        private static int NbElementInserted;
 
-        public QueueToProduceAndSort(int maxElements)
+        public CommunicateQueue(int maxElements)
         {
             nbElementToInsert = maxElements;
+        }
+
+        public void DuplicateKeysAppears()
+        {
+            /*if (IsFinished)
+            {
+                IsFinished = false;
+            }*/
         }
 
         public bool Enqueue(int integer)
