@@ -4,17 +4,17 @@ using System;
 namespace ProducteurConsommateur.Tests
 {
     [TestClass()]
-    public class SortedListOutputTests
+    public class OutputListTests
     {
-        public OutputList sortedListClass = new OutputList();
+        public OutputList OutputListClass = new OutputList();
 
         [TestMethod()]
         public void should_be_add_in_sortedList()
         {
             Random randomNumber = new Random();
             int number = randomNumber.Next();
-            sortedListClass.Add(number, number);
-            Assert.AreEqual(sortedListClass.sortedList.Count, 1);
+            OutputListClass.Add(number, number);
+            Assert.AreEqual(OutputListClass.outputList.Count, 1);
         }
 
     }
