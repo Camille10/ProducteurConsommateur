@@ -7,14 +7,14 @@ namespace ProducteurConsommateur
 {
     public class Consommateur
     {
-        private QueueToProduceAndSort queue;
-        private SortedListOutput sortedList;
+        private CommunicationQueue communicateQueue;
+        private OutputList sortedList;
         private Thread thread;
 
-        public Consommateur(QueueToProduceAndSort cqueue, SortedListOutput ListToSort)
+        public Consommateur(CommunicationQueue cqueue, OutputList ListToSort)
         {
             sortedList = ListToSort;
-            queue = cqueue;
+            communicateQueue = cqueue;
         }
 
         public void Run()
@@ -45,4 +45,3 @@ namespace ProducteurConsommateur
         }
     }
 }
-
