@@ -26,9 +26,21 @@ namespace ProducteurConsommateur
         private void Consume()
         {
             int integer;
-            while (queue.Dequeue(out integer))
+            while (communicateQueue.Dequeue(out integer))
             {
-                sortedList.Add(integer, integer);
+                try
+                {
+                    sortedList.Add(integer, integer);
+                }
+                catch (ArgumentException)
+                {
+                    // Impossible to add an duplicate keys on outputList.
+                    communicateQueue.DuplicateKeysAppears();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("An error appears : " + e.Message);
+                }
             }
         }
     }
