@@ -18,10 +18,13 @@ namespace ProducteurConsommateur
 
         public void DuplicateKeysAppears()
         {
-            /*if (IsFinished)
+            Monitor.Enter(this);
+            NbElementInserted--;
+            if (IsFinished)
             {
                 IsFinished = false;
-            }*/
+            }
+            Monitor.Exit(this);
         }
 
         public bool Enqueue(int integer)
