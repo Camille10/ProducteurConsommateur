@@ -5,13 +5,13 @@ namespace ProducteurConsommateur
 {
     public class CommunicationQueue
     {
-        private static Queue<int> queue = new Queue<int>();
+        private Queue<int> queue = new Queue<int>();
         public bool IsFinished { get; private set; } = false;
         public bool IsEmpty { get; private set; } = true;
-        private static int nbElementToInsert;
-        private static int NbElementInserted;
+        private int nbElementToInsert;
+        private int NbElementInserted;
         private ManualResetEvent events = new ManualResetEvent(false);
-        private static Mutex mutex = new Mutex();
+        private Mutex mutex = new Mutex();
 
         public CommunicationQueue(int maxElements)
         {
