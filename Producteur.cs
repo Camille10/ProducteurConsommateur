@@ -6,10 +6,9 @@ namespace ProducteurConsommateur
 {
     public class Producteur
     {
-        private QueueToProduceAndSort queue;
+        private CommunicationQueue queue;
         private Thread thread;
-
-        public Producteur(QueueToProduceAndSort cqueue)
+        public Producteur(CommunicationQueue cqueue)
         {
             queue = cqueue;
         }
@@ -25,7 +24,7 @@ namespace ProducteurConsommateur
             Random randomNumberGenerator = new Random();
             while (queue.Enqueue(randomNumberGenerator.Next()))
             {
-                /* Nothing to do */
+                //Thread.Sleep(5000);
             }
         }
     }
