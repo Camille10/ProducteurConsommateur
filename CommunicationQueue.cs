@@ -3,36 +3,40 @@ using System.Threading;
 
 namespace ProducteurConsommateur
 {
-    public class CommunicateQueue
+    public class CommunicationQueue
     {
         private static Queue<int> queue = new Queue<int>();
         public bool IsFinished { get; private set; } = false;
         public bool IsEmpty { get; private set; } = true;
         private static int nbElementToInsert;
         private static int NbElementInserted;
+        private ManualResetEvent events = new ManualResetEvent(false);
+        private static Mutex mutex = new Mutex();
 
-        public CommunicateQueue(int maxElements)
+        public CommunicationQueue(int maxElements)
         {
             nbElementToInsert = maxElements;
         }
 
         public void DuplicateKeysAppears()
         {
-            Monitor.Enter(this);
+            
+            mutex.WaitOne();
             NbElementInserted--;
             if (IsFinished)
             {
                 IsFinished = false;
             }
-            Monitor.Exit(this);
+            mutex.ReleaseMutex();
+            events.Set();
         }
 
         public bool Enqueue(int integer)
         {
-            Monitor.Enter(this);
+            mutex.WaitOne();
             if (IsFinished)
             {
-                Monitor.Exit(this);
+                mutex.ReleaseMutex();
                 return false;
             }
             queue.Enqueue(integer);
@@ -41,28 +45,30 @@ namespace ProducteurConsommateur
             {
                 IsFinished = true;
             }
-            Monitor.Pulse(this);
-            Monitor.Exit(this);
+            mutex.ReleaseMutex();
+            events.Set();
             return true;
         }
 
         public bool Dequeue(out int integer)
         {
-            Monitor.Enter(this);
+            mutex.WaitOne();
             if ((IsFinished) && (queue.Count == 0))
             {
                 IsEmpty = true;
-                Monitor.Exit(this);
+                mutex.ReleaseMutex();
                 integer = int.MinValue;
                 return false;
             }
             while (queue.Count == 0)
             {
                 IsEmpty = true;
-                Monitor.Wait(this);
+                events.WaitOne();
+                //Monitor.Wait(this);
             }
             integer = queue.Dequeue();
-            Monitor.Exit(this);
+            mutex.ReleaseMutex();
+            events.Set();
             return true;
         }
 
