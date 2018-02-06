@@ -9,16 +9,15 @@ namespace ProducteurConsommateur
 {
     class Program
     {
-        private static int NbElement = 10;
-        private static int NbProducteurConsommateur = 1;
+        private static int NbElement = 100000;
+        private static int NbProducteurConsommateur = 100;
 
 
         static void Main(string[] args)
         {
-                CommunicateQueue cqueue = new CommunicateQueue(NbElement);
+                CommunicationQueue cqueue = new CommunicationQueue(NbElement);
                 OutputList sortedListOutput = new OutputList();
-
-                for (int index = 0; index < NbProducteurConsommateur; index++)
+            for (int index = 0; index < NbProducteurConsommateur; index++)
                 {
                     if (!(cqueue.IsFinished && cqueue.IsEmpty))
                     {
