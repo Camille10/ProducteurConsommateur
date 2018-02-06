@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace ProducteurConsommateur.Tests
 {
@@ -8,7 +9,7 @@ namespace ProducteurConsommateur.Tests
     {
         private OutputList sortedList = new OutputList();
         private LinkedList<int> c = new LinkedList<int>();
-        QueueToProduceAndSort cqueue = new QueueToProduceAndSort(nbElement);
+        CommunicationQueue cqueue = new CommunicationQueue(nbElement);
         Consommateur consommateur;
         private static int nbElement = 1000;
 
@@ -18,7 +19,7 @@ namespace ProducteurConsommateur.Tests
         }
 
         [TestMethod]
-        public void Should_be_dequeue_the_queue()
+        public void Should_be_remove_in_queue()
         {
             Random _rnd = new Random();
             for (int _index = 0; _index < nbElement; _index++)
