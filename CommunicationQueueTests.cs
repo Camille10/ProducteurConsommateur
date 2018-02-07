@@ -11,7 +11,7 @@ namespace ProducteurConsommateur.Tests
     [TestClass()]
     public class CommunicateQueueTests
     {
-        private static int maxElements = 1000;
+        private int maxElements = 1000;
         CommunicateQueue queueToProduceAndSort = new CommunicateQueue(maxElements);
         Random ramdomNumberGenerator = new Random();
 
