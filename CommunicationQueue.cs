@@ -20,55 +20,56 @@ namespace ProducteurConsommateur
 
         public void DuplicateKeysAppears()
         {
-            
-            mutex.WaitOne();
-            NbElementInserted--;
-            if (IsFinished)
+            lock (this)
             {
-                IsFinished = false;
+                NbElementInserted--;
+                if (IsFinished)
+                {
+                    IsFinished = false;
+                }
+                events.Set();
             }
-            mutex.ReleaseMutex();
-            events.Set();
         }
 
         public bool Enqueue(int integer)
         {
-            mutex.WaitOne();
-            if (IsFinished)
-            {
-                mutex.ReleaseMutex();
-                return false;
+            lock (this) {
+                if (IsFinished)
+                {
+                    return false;
+                }
+                queue.Enqueue(integer);
+                IsEmpty = false;
+                if (++NbElementInserted == nbElementToInsert)
+                {
+                    IsFinished = true;
+                }
+                events.Set();
             }
-            queue.Enqueue(integer);
-            IsEmpty = false;
-            if (++NbElementInserted == nbElementToInsert)
-            {
-                IsFinished = true;
-            }
-            mutex.ReleaseMutex();
-            events.Set();
+
             return true;
         }
 
         public bool Dequeue(out int integer)
         {
-            mutex.WaitOne();
-            if ((IsFinished) && (queue.Count == 0))
+            lock (this)
             {
-                IsEmpty = true;
-                mutex.ReleaseMutex();
-                integer = int.MinValue;
-                return false;
+                if ((IsFinished) && (queue.Count == 0))
+                {
+                    IsEmpty = true;
+                    
+                    integer = int.MinValue;
+                    return false;
+                }
+                while (queue.Count == 0)
+                {
+                    IsEmpty = true;
+                    events.WaitOne();
+                }
+                integer = queue.Dequeue();
+                events.Set();
             }
-            while (queue.Count == 0)
-            {
-                IsEmpty = true;
-                events.WaitOne();
-                //Monitor.Wait(this);
-            }
-            integer = queue.Dequeue();
-            mutex.ReleaseMutex();
-            events.Set();
+            
             return true;
         }
 
